@@ -4,6 +4,7 @@ const Profile = (props)=>{
 
     const nameInputRef = useRef();
     const linkInputRef = useRef();
+    const  [notVerified, setNotVerified] = useState(true);
     const  [userName,setuserName] = useState('')
     const [link, setLink]  = useState('');
     
@@ -19,9 +20,11 @@ const Profile = (props)=>{
 
         const data = await response.json()
         const userData = data.users;
-        console.log(userData)
+        console.log(data)
         setuserName(userData[0].displayName)
         setLink(userData[0].photoUrl)
+        userData[0].emailVerified && setNotVerified(false)
+
         
         
     } 
@@ -30,6 +33,7 @@ const Profile = (props)=>{
         getBackData()
     },[])
 
+  
  
 
 
@@ -63,6 +67,31 @@ const Profile = (props)=>{
 
 
     };
+
+    const verifyEmailHandler =()=>{
+        const response = fetch('https://identitytoolkit.googleapis.com/v1/accounts:sendOobCode?key=AIzaSyA5WUH7hlBnwtKk_F6ck8WxS3FGYsJbonU',
+        {
+            method:'POST',
+            body: JSON.stringify({
+                requestType: "VERIFY_EMAIL",
+                idToken: localStorage.getItem('token'),
+
+            })
+        }).then(res=>{
+            if(res.ok){
+                alert('Email ID Verified')
+                
+                
+            }else{
+                throw new Error;
+            }
+        }).catch(
+            err=>{
+                console.log(err.message)
+
+            }
+        )
+    };
     return(
     <form onSubmit={profileDataHandler}>
         <h2>Contact Details</h2>
@@ -75,6 +104,7 @@ const Profile = (props)=>{
             <input type="text" id="photoUrl" ref={linkInputRef} defaultValue={link} />
         </div>
         <button type='submit' className='updateButton'>Update</button>
+        {notVerified && <button onClick={verifyEmailHandler}>Verify Email</button>}
     </form>)
 };
 
