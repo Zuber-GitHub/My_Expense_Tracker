@@ -64,6 +64,7 @@ const AuthForm = () => {
   }
 
   return (
+    <>
     <section className={classes.auth}>
       <h1>{isLogin ? 'Login' : 'Sign Up'}</h1>
       
@@ -90,6 +91,7 @@ const AuthForm = () => {
         </div>
       </form>
     </section>
+    </>
   );
 };
 
