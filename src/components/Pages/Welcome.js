@@ -1,5 +1,6 @@
 import { Link, useHistory } from "react-router-dom";
 import './Welcome.css'
+import Expenses from "./Expenses";
 const Welcome = (props) => {
     const history  = useHistory();
     function logoutHandler(){
@@ -16,6 +17,8 @@ const Welcome = (props) => {
     <div className="profileButton">Your Profile is Incomplete <Link to='/profile'>Complete Now?</Link></div>
     </div>
     <button onClick={logoutHandler}>Log Out</button>
+    <Expenses></Expenses>
+
     </>
     )
 }
