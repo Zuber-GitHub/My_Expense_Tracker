@@ -1,5 +1,5 @@
 import { useState, useRef} from 'react';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import classes from './AuthForm.module.css';
 
 const AuthForm = () => {
@@ -86,6 +86,7 @@ const AuthForm = () => {
           >
             {isLogin ? 'Create new account' : 'Login with existing account'}
           </button>
+          <Link to='/forgotpassword'> Forgot Password?</Link>
         </div>
       </form>
     </section>

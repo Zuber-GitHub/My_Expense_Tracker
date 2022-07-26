@@ -1,5 +1,6 @@
 import { Redirect, Route,Switch } from "react-router-dom";
 import AuthForm from "./components/Auth/AuthForm";
+import ForgotPassword from "./components/Pages/ForgotPassword";
 import Profile from "./components/Pages/Profile";
 import Welcome from "./components/Pages/Welcome";
 
@@ -20,6 +21,9 @@ function App() {
       
         <Profile></Profile>
         </Route>
+      <Route path='/forgotpassword'>
+        <ForgotPassword/>
+      </Route>
 
      
       </Switch>
