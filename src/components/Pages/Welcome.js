@@ -11,12 +11,10 @@ const Welcome = (props) => {
     return(
         <>
     <div className="header">
-    <div className="welcomeContent" >
-        Welcome to Expense Tracker!!!
+    
+    <Link className="profileButton" to='/profile'>PROFILE</Link>
     </div>
-    <div className="profileButton">Your Profile is Incomplete <Link to='/profile'>Complete Now?</Link></div>
-    </div>
-    <button onClick={logoutHandler}>Log Out</button>
+    <button className="logoutbtn" onClick={logoutHandler}>Log Out</button>
     <Expenses></Expenses>
 
     </>

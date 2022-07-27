@@ -10,6 +10,53 @@ const Expenses = (props)=>{
     const categoryInputRef = useRef();
     const [expenses, setExpenses] = useState([]);
 
+    const deleteExpense = (item)=>{
+        const filteredList = expenses.filter((lst)=>lst.description===item.description);
+        for( let i = 0; i < expenses.length; i++){ 
+    
+            if ( expenses[i] === filteredList[0]) { 
+        
+                expenses.splice(i, 1); 
+            }
+        
+        }
+        reqPUT(expenses).then(res=>{setExpenses([...expenses])})
+       
+    }
+
+    const editExpense = (item)=>{
+        const filteredList = expenses.filter((lst)=>lst.description===item.description);
+        for( let i = 0; i < expenses.length; i++){ 
+    
+            if ( expenses[i] === filteredList[0]) { 
+        
+                const money = prompt('Enter the Amount', expenses[i].money)
+                const description  = prompt('Enter the Description', expenses[i].description)
+                const category = prompt('Enter the Category', expenses[i].category)
+                expenses.splice(i, 1,{money:money,description:description,category:category});
+
+            }
+            reqPUT(expenses).then(res=>{setExpenses([...expenses])})
+        
+        }
+        
+        
+
+    }
+
+
+    async function reqPUT(expenseList){
+        const response = await fetch(`https://expense-tracker-244bf-default-rtdb.firebaseio.com/${enteredEmail}.json`,
+        {
+            method:'PUT',
+            body:JSON.stringify(expenseList)
+        })
+        
+
+    }
+
+    
+
     async function reqPOST(expense){
         const response = await fetch(`https://expense-tracker-244bf-default-rtdb.firebaseio.com/${enteredEmail}.json`,
         {
@@ -35,12 +82,19 @@ const Expenses = (props)=>{
               })
             }
           }).then((data) => {
+            if(data===null){
+                setExpenses([])
+
+            }
+            else{
+                const storedData = [];
+                for(let vals of Object.values(data)){
+                  storedData.push(vals)
+                }
+                setExpenses(storedData)
+            }
               
-              const storedData = [];
-              for(let vals of Object.values(data)){
-                storedData.push(vals)
-              }
-              setExpenses(storedData)
+             
             
             
         })
@@ -48,6 +102,8 @@ const Expenses = (props)=>{
             alert(err.errorMessage)
           })
         }
+
+    
         
     
 
@@ -93,7 +149,7 @@ const Expenses = (props)=>{
           </div>
         </form>
       </section>
-      <ExpenseList expenses = {expenses}></ExpenseList>
+      <ExpenseList expenses = {expenses} deleteExpense = {deleteExpense}  editExpense = {editExpense}></ExpenseList>
       </>
     );
 };
