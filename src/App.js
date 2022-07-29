@@ -7,6 +7,7 @@ import Welcome from "./components/Pages/Welcome";
 function App() {
   return (
     <div>
+    
       <Switch>
       <Route path="/Welcome" exact>
         <Welcome/>
